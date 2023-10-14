@@ -1,6 +1,6 @@
 # MyApp
 
-MyApp is a simple Flutter application that demonstrates how to use various widgets and features of the Flutter framework.
+This is our app
 
 ## Getting Started
 
