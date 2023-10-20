@@ -1,4 +1,4 @@
-import 'package:ap_front/pages/nav/bottomnav.dart';
+import 'package:ap_front/pages/shared/bottomnav.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {

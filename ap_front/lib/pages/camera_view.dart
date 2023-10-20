@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:ap_front/pages/nav/bottomnav.dart';
+import 'package:ap_front/pages/shared/bottomnav.dart';
 
 //camera page
 class CameraPage extends StatefulWidget {

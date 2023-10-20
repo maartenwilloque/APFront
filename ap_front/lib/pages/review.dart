@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ap_front/pages/nav/bottomnav.dart';
+import 'package:ap_front/pages/shared/bottomnav.dart';
 
 class ReviewPage extends StatefulWidget {
   @override
