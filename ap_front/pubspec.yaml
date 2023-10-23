@@ -30,12 +30,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  http: ^0.13.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   camera: ^0.9.4+5
+  augmented_reality_plugin_wikitude:
+    path: ./plugin/augmented_reality_plugin_wikitude/
 
 dev_dependencies:
   flutter_test:
