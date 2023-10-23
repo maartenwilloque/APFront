@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
 
 class ReviewPage extends StatefulWidget {
+  const ReviewPage({super.key});
+
   @override
   _ReviewPageState createState() => _ReviewPageState();
 }
@@ -22,6 +24,6 @@ class _ReviewPageState extends State<ReviewPage> {
             ],
           ),
         ),
-        bottomNavigationBar: const MyBottomNavigation());
+        bottomNavigationBar: MyBottomNavigation());
   }
 }

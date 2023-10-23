@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         home: const MyHomePage(title: 'Flutter Album-Opedia'),
         routes: {
           '/camera': (context) => const CameraPage(),
-          '/review': (context) => ReviewPage(),
+          '/review': (context) => const ReviewPage(),
           '/history': (context) => const HistoryPage(
                 title: 'Review History',
               ),
