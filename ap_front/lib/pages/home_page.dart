@@ -16,7 +16,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _albumTitle = 'Loading...';
   String _bandName = '';
-
+  String _imageUrl = '';
+  bool _isLoading = true;
   Future<void> _fetchAlbumData() async {
     //random but not random because we only have 1 album
     final randomInt = Random().nextInt(1) + 1;
@@ -30,6 +31,25 @@ class _MyHomePageState extends State<MyHomePage> {
       final albumTitle = jsonData['title'];
       final bandName = jsonData['band']['name'];
 
+      final getImdbResponse = await http.get(Uri.parse(
+          'http://musicbrainz.org/ws/2/release/?query=release:$albumTitle%20AND%20artist:$bandName&fmt=json'));
+      if (getImdbResponse.statusCode == 200) {
+        final imdbJsonData =
+            jsonDecode(getImdbResponse.body) as Map<String, dynamic>;
+        final imdbId = imdbJsonData['releases'][0]['id'];
+        final imdbResponse = await http
+            .get(Uri.parse('http://coverartarchive.org/release/$imdbId'));
+        if (imdbResponse.statusCode == 200) {
+          final imdbImageJsonData =
+              jsonDecode(imdbResponse.body) as Map<String, dynamic>;
+          final imageUrl =
+              imdbImageJsonData['images'][0]['thumbnails']['small'];
+          setState(() {
+            _imageUrl = imageUrl;
+          });
+          _isLoading = false;
+        }
+      }
       // Update the UI with the fetched data
       setState(() {
         _albumTitle = albumTitle;
@@ -68,7 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "by: $_bandName",
                 style: const TextStyle(fontSize: 24),
-              )
+              ),
+              _isLoading
+                  ? const CircularProgressIndicator()
+                  : Image.network(_imageUrl),
             ],
           ),
         ),

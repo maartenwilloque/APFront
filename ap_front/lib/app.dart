@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
           '/history': (context) => const HistoryPage(
                 title: 'Review History',
               ),
+          '/home': (context) => const MyHomePage(title: 'Flutter Album-Opedia'),
         });
   }
 }
