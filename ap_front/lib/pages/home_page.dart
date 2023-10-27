@@ -48,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
             _imageUrl = imageUrl;
           });
           _isLoading = false;
+        } else {
+          throw Exception('Failed to fetch album thumbnail');
         }
       }
       // Update the UI with the fetched data
