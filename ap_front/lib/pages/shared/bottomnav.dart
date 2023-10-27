@@ -11,8 +11,8 @@ class MyBottomNavigation extends StatelessWidget {
         color: Theme.of(context).colorScheme.inversePrimary,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           IconButton(
-            icon: const Icon(Icons.stars_outlined),
-            onPressed: () => Navigator.of(context).pushNamed('/review'),
+            onPressed: () => Navigator.of(context).pushNamed('/home'),
+            icon: const Icon(Icons.home),
           ),
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed('/camera'),
@@ -24,8 +24,8 @@ class MyBottomNavigation extends StatelessWidget {
             icon: const Icon(Icons.book_rounded),
           ),
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/home'),
-            icon: const Icon(Icons.home),
+            icon: const Icon(Icons.stars_outlined),
+            onPressed: () => Navigator.of(context).pushNamed('/review'),
           ),
         ]));
   }
