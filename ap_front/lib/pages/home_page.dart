@@ -2,6 +2,7 @@ import 'package:ap_front/pages/shared/bottomnav.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,22 +14,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _albumTitle = 'Loading...';
+  String _bandName = '';
+
   Future<void> _fetchAlbumData() async {
-    String _albumTitle = '';
-    String _albumArtist = '';
+    //random but not random because we only have 1 album
+    final randomInt = Random().nextInt(1) + 1;
+
     final response = await http.get(Uri.parse(
-        'https://album-service-maartenwilloque.cloud.okteto.net/api/album/1'));
+        'https://album-service-maartenwilloque.cloud.okteto.net/api/album/$randomInt'));
 
     if (response.statusCode == 200) {
       // The request was successful, parse the JSON data
-      final jsonData = jsonDecode(response.body);
+      final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       final albumTitle = jsonData['title'];
-      final albumArtist = jsonData['artist'];
+      final bandName = jsonData['band']['name'];
 
       // Update the UI with the fetched data
       setState(() {
         _albumTitle = albumTitle;
-        _albumArtist = albumArtist;
+        _bandName = bandName;
       });
     } else {
       // The request failed, handle the error
@@ -49,13 +54,21 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'popular albums',
+              const Text(
+                'Album of the day:',
               ),
+              Text(
+                _albumTitle,
+                style: const TextStyle(fontSize: 24),
+              ),
+              Text(
+                "by: $_bandName",
+                style: const TextStyle(fontSize: 24),
+              )
             ],
           ),
         ),
