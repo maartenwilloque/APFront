@@ -1,4 +1,4 @@
-import 'package:ap_front/models/members.dart';
+import 'package:ap_front/models/member.dart';
 
 class Band {
   String bandId;
@@ -13,10 +13,14 @@ class Band {
       required this.members});
 
   factory Band.fromJson(Map<String, dynamic> json) {
+    var membersFromJson = json['members'];
+    List<Member> membersJson = List<dynamic>.from(membersFromJson)
+        .map((e) => Member.fromJson(e))
+        .toList();
     return Band(
         bandId: json['bandId'],
         name: json['name'],
         nationality: json['nationality'],
-        members: json['members']);
+        members: membersJson);
   }
 }

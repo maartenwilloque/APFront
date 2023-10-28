@@ -1,12 +1,9 @@
 import 'package:ap_front/apis/album_api.dart';
+import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
 import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
-import 'package:ap_front/pages/shared/thumbnail.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:math';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -18,82 +15,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _albumTitle = 'Loading...';
-  String _bandName = '';
   String _imageUrl = '';
   bool _isLoading = true;
-  String _albumId = '';
+  Album? album;
 
-  /*Album? album;
-
-  @override
-  void initState() {
-    super.initState();
-    _getAlbum();
-  }
-
-  void _getAlbum() {
-    AlbumApi.fetchAlbum(1).then((result) {
+  Future<void> _getAlbum() async {
+    await AlbumApi.fetchAlbum(1).then((result) {
       setState(() {
         album = result;
       });
     });
-  }
-  */
 
-  Future<void> _fetchAlbumData() async {
-    //random but not random because we only have 1 album
-    final randomInt = Random().nextInt(1) + 1;
-
-    final response = await http.get(Uri.parse(
-        'https://album-service-maartenwilloque.cloud.okteto.net/api/album/$randomInt'));
-
-    if (response.statusCode == 200) {
-      // The request was successful, parse the JSON data
-      final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
-      final albumTitle = jsonData['title'];
-      final bandName = jsonData['band']['name'];
-      final albumId = jsonData['albumId'];
-
-      await getThumbnail(bandName, albumTitle).then((String result) {
-        setState(() {
-          _imageUrl = result;
-        });
-      });
-      _isLoading = false;
-
-      /*final getImdbResponse = await http.get(Uri.parse(
-          'http://musicbrainz.org/ws/2/release/?query=release:$albumTitle%20AND%20artist:$bandName&fmt=json'));
-      if (getImdbResponse.statusCode == 200) {
-        final imdbJsonData =
-            jsonDecode(getImdbResponse.body) as Map<String, dynamic>;
-        final imdbId = imdbJsonData['releases'][0]['id'];
-        final imdbResponse = await http
-            .get(Uri.parse('http://coverartarchive.org/release/$imdbId'));
-        if (imdbResponse.statusCode == 200) {
-          final imdbImageJsonData =
-              jsonDecode(imdbResponse.body) as Map<String, dynamic>;
-          final imageUrl =
-              imdbImageJsonData['images'][0]['thumbnails']['small'];
-          setState(() {
-            _imageUrl = imageUrl;
-          });
-          _isLoading = false;
-        } else {
-          throw Exception('Failed to fetch album thumbnail');
-        }
-      }*/
-
-      // Update the UI with the fetched data
+    await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
+        .then((result) {
       setState(() {
-        _albumTitle = albumTitle;
-        _bandName = bandName;
-        _albumId = albumId;
+        _imageUrl = result;
       });
-    } else {
-      // The request failed, handle the error
-      throw Exception('Failed to fetch album data');
-    }
+    });
+    _isLoading = false;
   }
 
   void _goToDetailPage(BuildContext context, String id) {
@@ -103,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    _fetchAlbumData();
     super.initState();
+    _getAlbum();
   }
 
   @override
@@ -123,10 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 30),
               ),
               Text(
-                _albumTitle,
+                album!.title,
                 style: const TextStyle(fontSize: 24),
               ),
-              Text("by: $_bandName", style: const TextStyle(fontSize: 24)),
+              Text("by: ${album!.band.name}",
+                  style: const TextStyle(fontSize: 24)),
               _isLoading
                   ? const CircularProgressIndicator()
                   : Image.network(_imageUrl),
@@ -139,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor:
                           Theme.of(context).colorScheme.inversePrimary),
                   onPressed: () {
-                    _goToDetailPage(context, _albumId);
+                    _goToDetailPage(context, album!.albumId);
                   },
                   child: const Text('Details'))
             ],

@@ -16,11 +16,17 @@ class Album {
       required this.songs});
 
   factory Album.fromJson(Map<String, dynamic> json) {
+    var bandFomJson = json['band'];
+    Band bandJson = Band.fromJson(bandFomJson);
+    var songsFromJson = json['songs'];
+    List<Song> songsJson =
+        List<dynamic>.from(songsFromJson).map((e) => Song.fromJson(e)).toList();
+
     return Album(
         albumId: json['albumId'],
         title: json['title'],
         year: json['year'],
-        band: json['band'],
-        songs: json['songs']);
+        band: bandJson,
+        songs: songsJson);
   }
 }
