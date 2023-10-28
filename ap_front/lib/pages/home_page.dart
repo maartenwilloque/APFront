@@ -1,4 +1,8 @@
+import 'package:ap_front/apis/album_api.dart';
+import 'package:ap_front/models/album.dart';
+import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
+import 'package:ap_front/pages/shared/thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,6 +22,25 @@ class _MyHomePageState extends State<MyHomePage> {
   String _bandName = '';
   String _imageUrl = '';
   bool _isLoading = true;
+  String _albumId = '';
+
+  /*Album? album;
+
+  @override
+  void initState() {
+    super.initState();
+    _getAlbum();
+  }
+
+  void _getAlbum() {
+    AlbumApi.fetchAlbum(1).then((result) {
+      setState(() {
+        album = result;
+      });
+    });
+  }
+  */
+
   Future<void> _fetchAlbumData() async {
     //random but not random because we only have 1 album
     final randomInt = Random().nextInt(1) + 1;
@@ -30,8 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       final albumTitle = jsonData['title'];
       final bandName = jsonData['band']['name'];
+      final albumId = jsonData['albumId'];
 
-      final getImdbResponse = await http.get(Uri.parse(
+      await getThumbnail(bandName, albumTitle).then((String result) {
+        setState(() {
+          _imageUrl = result;
+        });
+      });
+      _isLoading = false;
+
+      /*final getImdbResponse = await http.get(Uri.parse(
           'http://musicbrainz.org/ws/2/release/?query=release:$albumTitle%20AND%20artist:$bandName&fmt=json'));
       if (getImdbResponse.statusCode == 200) {
         final imdbJsonData =
@@ -51,16 +82,23 @@ class _MyHomePageState extends State<MyHomePage> {
         } else {
           throw Exception('Failed to fetch album thumbnail');
         }
-      }
+      }*/
+
       // Update the UI with the fetched data
       setState(() {
         _albumTitle = albumTitle;
         _bandName = bandName;
+        _albumId = albumId;
       });
     } else {
       // The request failed, handle the error
       throw Exception('Failed to fetch album data');
     }
+  }
+
+  void _goToDetailPage(BuildContext context, String id) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => DetailPage(id: id)));
   }
 
   @override
@@ -82,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               const Text(
                 'Album of the day:',
+                style: TextStyle(fontSize: 30),
               ),
               Text(
                 _albumTitle,
@@ -91,6 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
               _isLoading
                   ? const CircularProgressIndicator()
                   : Image.network(_imageUrl),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(200, 40),
+                      backgroundColor:
+                          Theme.of(context).colorScheme.inversePrimary),
+                  onPressed: () {
+                    _goToDetailPage(context, _albumId);
+                  },
+                  child: const Text('Details'))
             ],
           ),
         ),

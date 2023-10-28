@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'AlbumOpedia',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -24,10 +25,8 @@ class MyApp extends StatelessWidget {
           '/history': (context) => const HistoryPage(
                 title: 'Review History',
               ),
-
           '/home': (context) =>
               const MyHomePage(title: 'Flutter Album-Opedia Home '),
-
         });
   }
 }
