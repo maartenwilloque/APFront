@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
         title: 'AlbumOpedia',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 21, 6, 46)),
+            seedColor: const Color.fromARGB(255, 21, 6, 46),
+          ),
           useMaterial3: true,
         ),
         home: const MyHomePage(title: 'Flutter Album-Opedia'),

@@ -62,10 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 30),
               ),
               Text(
-                album!.title,
+                album != null ? album!.title : '',
                 style: const TextStyle(fontSize: 24),
               ),
-              Text("by: ${album!.band.name}",
+              Text("by: ${album != null ? album!.band.name : ''}",
                   style: const TextStyle(fontSize: 24)),
               _isLoading
                   ? const CircularProgressIndicator()
@@ -79,7 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor:
                           Theme.of(context).colorScheme.inversePrimary),
                   onPressed: () {
-                    _goToDetailPage(context, album!.albumId);
+                    if (album != null) {
+                      _goToDetailPage(context, album!.albumId);
+                    }
                   },
                   child: const Text('Details'))
             ],

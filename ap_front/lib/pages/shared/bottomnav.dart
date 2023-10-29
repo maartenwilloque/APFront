@@ -11,21 +11,38 @@ class MyBottomNavigation extends StatelessWidget {
         color: Theme.of(context).colorScheme.inversePrimary,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/home'),
+            onPressed: () {
+              String? currentRoute = ModalRoute.of(context)?.settings.name;
+              if (currentRoute != '/home' && currentRoute != '/') {
+                Navigator.of(context).pushNamed('/home');
+              }
+            },
             icon: const Icon(Icons.home),
           ),
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/camera'),
+            onPressed: () {
+              if (ModalRoute.of(context)?.settings.name != '/camera') {
+                Navigator.of(context).pushNamed('/camera');
+              }
+            },
             icon: const Icon(Icons.camera),
           ),
           //open camera button
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/history'),
+            onPressed: () {
+              if (ModalRoute.of(context)?.settings.name != '/history') {
+                Navigator.of(context).pushNamed('/history');
+              }
+            },
             icon: const Icon(Icons.book_rounded),
           ),
           IconButton(
+            onPressed: () {
+              if (ModalRoute.of(context)?.settings.name != '/review') {
+                Navigator.of(context).pushNamed('/review');
+              }
+            },
             icon: const Icon(Icons.stars_outlined),
-            onPressed: () => Navigator.of(context).pushNamed('/review'),
           ),
         ]));
 
