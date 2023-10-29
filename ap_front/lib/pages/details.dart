@@ -31,7 +31,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(album!.title),
+        child: Text(album != null ? album!.title : ""),
       ),
       bottomNavigationBar: const MyBottomNavigation(),
       // Add your widgets here
