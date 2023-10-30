@@ -23,18 +23,18 @@ class _MyHomePageState extends State<MyHomePage> {
   String _imageUrl = '';
   bool _isLoading = true;
   Album? album;
-  int count = 0;
+
   Random random = Random();
 
   Future<void> _getAlbum() async {
-    /*await AlbumApi.countAlbums().then((result) {
+    int count = 1;
+    await AlbumApi.countAlbums().then((result) {
       setState(() {
         count = result;
       });
     });
-    */
 
-    int randomNumber = random.nextInt(3 + 1);
+    int randomNumber = random.nextInt(count + 1);
 
     await AlbumApi.fetchAlbum(randomNumber).then((result) {
       setState(() {
