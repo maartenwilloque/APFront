@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ap_front/apis/album_api.dart';
 import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
@@ -18,9 +20,20 @@ class _MyHomePageState extends State<MyHomePage> {
   String _imageUrl = '';
   bool _isLoading = true;
   Album? album;
+  int count = 0;
+  Random random = Random();
 
   Future<void> _getAlbum() async {
-    await AlbumApi.fetchAlbum(1).then((result) {
+    /*await AlbumApi.countAlbums().then((result) {
+      setState(() {
+        count = result;
+      });
+    });
+    */
+
+    int randomNumber = random.nextInt(3 + 1);
+
+    await AlbumApi.fetchAlbum(randomNumber).then((result) {
       setState(() {
         album = result;
       });
