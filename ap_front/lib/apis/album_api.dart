@@ -17,15 +17,15 @@ class AlbumApi {
     }
   }
 
-  /*static Future<int> countAlbums() async {
+  static Future<int> countAlbums() async {
     var url = Uri.https(server, '/api/albums');
-    int result = 0;
+    int result = 1;
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      Map<String, dynamic> jsonMap = json.decode(response.body);
-      result = jsonMap.length;
+      List<dynamic> albumJson = json.decode(response.body);
+      result = albumJson.length;
     }
     return result;
-  }*/
+  }
 }
