@@ -28,4 +28,35 @@ class AlbumApi {
     }
     return result;
   }
+
+  static Future<List<Album>> fetchAlbums() async {
+    var url = Uri.https(server, '/api/albums');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> albumJson = json.decode(response.body);
+      List<Album> albums = albumJson
+          .map((dynamic item) => Album.fromJson(item))
+          .toList()
+          .cast<Album>();
+      return albums;
+    } else {
+      throw Exception('Failed to load albums');
+    }
+  }
+
+  static Future<List<Album>> fetchAlbumsByBand(String bandId) async {
+    var url = Uri.https(server, '/api/albums');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<dynamic> albumJson = json.decode(response.body);
+      List<Album> albums = albumJson
+          .map((dynamic item) => Album.fromJson(item))
+          .where((element) => element.band.bandId == bandId)
+          .toList()
+          .cast<Album>();
+      return albums;
+    } else {
+      throw Exception('Failed to load albums');
+    }
+  }
 }
