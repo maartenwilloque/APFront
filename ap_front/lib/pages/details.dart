@@ -74,7 +74,7 @@ class _DetailPageState extends State<DetailPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return RatingPopup(
-                    albumId: album?.albumId ?? "0",
+                    albumId: album?.albumId ?? "",
                   );
                 },
               );
@@ -106,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
               style: theme.headlineLarge,
             ),
             BandMembersList(
-              bandName: album?.band.name ?? "None",
+              bandName: album?.band.name ?? "",
               members: album?.band.members ?? [],
             ),
             RatingStars(
