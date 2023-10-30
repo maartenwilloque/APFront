@@ -7,13 +7,15 @@ class Album {
   int year;
   Band band;
   List<Song> songs;
+  double rating;
 
   Album(
       {required this.albumId,
       required this.title,
       required this.year,
       required this.band,
-      required this.songs});
+      required this.songs,
+      required this.rating});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     var bandFomJson = json['band'];
@@ -27,6 +29,7 @@ class Album {
         title: json['title'],
         year: json['year'],
         band: bandJson,
-        songs: songsJson);
+        songs: songsJson,
+        rating: json['rating']);
   }
 }
