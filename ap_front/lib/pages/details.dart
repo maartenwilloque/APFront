@@ -30,13 +30,17 @@ class _DetailPageState extends State<DetailPage> {
       });
     });
 
-    await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
-        .then((result) {
-      setState(() {
-        _imageUrl = result;
+    if (album == null) {
+      return;
+    } else {
+      await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
+          .then((result) {
+        setState(() {
+          _imageUrl = result;
+        });
       });
-    });
-    _isLoading = false;
+      _isLoading = false;
+    }
   }
 
   @override
@@ -70,7 +74,7 @@ class _DetailPageState extends State<DetailPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return RatingPopup(
-                    albumId: album!.albumId,
+                    albumId: album?.albumId ?? "0",
                   );
                 },
               );
@@ -98,18 +102,18 @@ class _DetailPageState extends State<DetailPage> {
               height: heightBetweenElements,
             ),
             Text(
-              album!.title,
+              album?.title ?? "title not found",
               style: theme.headlineLarge,
             ),
             BandMembersList(
-              bandName: album!.band.name,
-              members: album!.band.members,
+              bandName: album?.band.name ?? "None",
+              members: album?.band.members ?? [],
             ),
             RatingStars(
-              rating: album!.rating,
+              rating: album?.rating ?? 0,
               starSize: 50.0,
             ),
-            SongList(songs: album!.songs),
+            SongList(songs: album?.songs ?? []),
           ],
         )),
       ),
