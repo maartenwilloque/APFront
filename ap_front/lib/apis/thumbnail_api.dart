@@ -5,7 +5,7 @@ class ThumbnailApi {
   static String server = 'musicbrainz.org/ws/2/release/';
   static String result = '';
 
-  static Future<String> fetchThumbnail(band, album) async {
+  static Future<String> fetchThumbnail(band, album, {int release = 0}) async {
     var url = Uri.parse(
         'http://musicbrainz.org/ws/2/release/?query=release:$album%20AND%20artist:$band&fmt=json');
 
@@ -13,7 +13,8 @@ class ThumbnailApi {
     if (getImdbResponse.statusCode == 200) {
       final imdbJsonData =
           jsonDecode(getImdbResponse.body) as Map<String, dynamic>;
-      final imdbId = imdbJsonData['releases'][0]['id'];
+
+      final imdbId = imdbJsonData['releases'][release]['id'];
       final imdbResponse = await http
           .get(Uri.parse('http://coverartarchive.org/release/$imdbId'));
       if (imdbResponse.statusCode == 200) {
@@ -22,7 +23,7 @@ class ThumbnailApi {
         final imageUrl = imdbImageJsonData['images'][0]['thumbnails']['small'];
         result = imageUrl;
       } else {
-        throw Exception('Failed to fetch album thumbnail');
+        fetchThumbnail(band, album, release: release + 1);
       }
     }
     return result;

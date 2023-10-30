@@ -8,7 +8,7 @@ import 'package:ap_front/widgets/ratingstars.dart';
 import 'package:ap_front/widgets/songlistdisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
-import 'package:ap_front/widgets/albumcollection.dart';
+import 'package:ap_front/pages/albumcollection.dart';
 
 class DetailPage extends StatefulWidget {
   final String id;
@@ -127,8 +127,10 @@ class _DetailPageState extends State<DetailPage> {
             ),
             FloatingActionButton.extended(
                 backgroundColor: scheme.primary,
+                foregroundColor: Colors.white,
                 focusColor: scheme.inversePrimary,
-                label: const Text("More from this artist"),
+                label: Text("More from this artist",
+                    style: theme.displaySmall, textAlign: TextAlign.center),
                 onPressed: () {
                   _goToAlbumList(context, artistId);
                 }),
