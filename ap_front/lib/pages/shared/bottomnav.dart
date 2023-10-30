@@ -7,8 +7,10 @@ class MyBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return BottomAppBar(
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: scheme.primary,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           IconButton(
             onPressed: () {
@@ -17,7 +19,10 @@ class MyBottomNavigation extends StatelessWidget {
                 Navigator.of(context).pushNamed('/home');
               }
             },
-            icon: const Icon(Icons.home),
+            icon: const Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
           ),
           IconButton(
             onPressed: () {
@@ -25,7 +30,10 @@ class MyBottomNavigation extends StatelessWidget {
                 Navigator.of(context).pushNamed('/camera');
               }
             },
-            icon: const Icon(Icons.camera),
+            icon: const Icon(
+              Icons.camera,
+              color: Colors.white,
+            ),
           ),
           //open camera button
           IconButton(
@@ -34,7 +42,10 @@ class MyBottomNavigation extends StatelessWidget {
                 Navigator.of(context).pushNamed('/history');
               }
             },
-            icon: const Icon(Icons.book_rounded),
+            icon: const Icon(
+              Icons.book_rounded,
+              color: Colors.white,
+            ),
           ),
           IconButton(
             onPressed: () {
@@ -42,7 +53,10 @@ class MyBottomNavigation extends StatelessWidget {
                 Navigator.of(context).pushNamed('/review');
               }
             },
-            icon: const Icon(Icons.stars_outlined),
+            icon: const Icon(
+              Icons.stars_outlined,
+              color: Colors.white,
+            ),
           ),
         ]));
 

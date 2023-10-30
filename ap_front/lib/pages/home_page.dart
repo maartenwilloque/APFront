@@ -3,6 +3,9 @@ import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
 import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
+import 'package:ap_front/widgets/albumcover.dart';
+import 'package:ap_front/widgets/albumdisplay.dart';
+import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -48,45 +51,65 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+    ColorScheme scheme = Theme.of(context).colorScheme;
+    const double heightBetweenElements = 15;
+
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+      appBar: AppBar(
+        backgroundColor: scheme.primary,
+        title: Text(
+          widget.title,
+          style: theme.displayLarge,
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Album of the day:',
-                style: TextStyle(fontSize: 30),
-              ),
-              Text(
-                album != null ? album!.title : '',
-                style: const TextStyle(fontSize: 24),
-              ),
-              Text("by: ${album != null ? album!.band.name : ''}",
-                  style: const TextStyle(fontSize: 24)),
-              _isLoading
-                  ? const CircularProgressIndicator()
-                  : Image.network(_imageUrl),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(200, 40),
-                      backgroundColor:
-                          Theme.of(context).colorScheme.inversePrimary),
-                  onPressed: () {
-                    if (album != null) {
-                      _goToDetailPage(context, album!.albumId);
-                    }
-                  },
-                  child: const Text('Details'))
-            ],
-          ),
+        toolbarHeight: 75,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
-        bottomNavigationBar: const MyBottomNavigation());
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const TitleDisplayWidget(
+              title: 'Album of the Day',
+            ),
+            const SizedBox(
+              height: heightBetweenElements,
+            ),
+            AlbumCoverWidget(
+              imageUrl: _imageUrl,
+              isLoading: _isLoading,
+            ),
+            const SizedBox(
+              height: heightBetweenElements,
+            ),
+            AlbumDisplayWidget(
+              album: album,
+            ),
+            const SizedBox(
+              height: heightBetweenElements,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(290, 50),
+                backgroundColor: scheme.primary,
+              ),
+              onPressed: () {
+                if (album != null) {
+                  _goToDetailPage(context, album!.albumId);
+                }
+              },
+              child: Text(
+                'Details',
+                style: theme.displaySmall,
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: const MyBottomNavigation(),
+    );
   }
 }
