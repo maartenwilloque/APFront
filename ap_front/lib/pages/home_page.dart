@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
 
-    int randomNumber = random.nextInt(count + 1);
+    int randomNumber = random.nextInt(count) + 1;
 
     await AlbumApi.fetchAlbum(randomNumber).then((result) {
       setState(() {
