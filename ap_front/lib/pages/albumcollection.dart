@@ -6,7 +6,7 @@ import 'package:ap_front/apis/album_api.dart';
 class AlbumCollection extends StatefulWidget {
   final String artistId;
 
-  AlbumCollection({required this.artistId});
+  const AlbumCollection({super.key, required this.artistId});
 
   @override
   _AlbumCollectionState createState() => _AlbumCollectionState();
