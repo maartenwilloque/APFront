@@ -14,7 +14,7 @@ class AlbumApi {
     if (response.statusCode == 200) {
       return Album.fromJson(jsonDecode(response.body));
     } else {
-      sleep(Duration(seconds: 1));
+      sleep(const Duration(seconds: 1));
       return fetchAlbum(id);
     }
   }
