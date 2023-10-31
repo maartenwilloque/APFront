@@ -1,9 +1,47 @@
+import 'package:augmented_reality_plugin_wikitude/wikitude_plugin.dart';
+import 'package:augmented_reality_plugin_wikitude/wikitude_response.dart';
 import 'package:flutter/material.dart';
 
 //this is the bottom navigation bar, consisting of 4 icons each leading to a different page
 
-class MyBottomNavigation extends StatelessWidget {
+class MyBottomNavigation extends StatefulWidget {
   const MyBottomNavigation({Key? key}) : super(key: key);
+
+  @override
+  State<MyBottomNavigation> createState() => _MyBottomNavigation();
+}
+
+class _MyBottomNavigation extends State<MyBottomNavigation> {
+  List<String> features = ["image_tracking"];
+  void navigateToCamera() {
+    checkDeviceCompatibility().then((value) => {
+          if (value.success)
+            {
+              requestARPermissions().then((value) => {
+                    if (value.success)
+                      {
+                        if (ModalRoute.of(context)?.settings.name != '/camera')
+                          {Navigator.of(context).pushNamed('/camera')}
+                      }
+                    else
+                      {
+                        debugPrint("AR permissions denied"),
+                        debugPrint(value.message)
+                      }
+                  })
+            }
+          else
+            {debugPrint("Device incompatible"), debugPrint(value.message)}
+        });
+  }
+
+  Future<WikitudeResponse> checkDeviceCompatibility() async {
+    return await WikitudePlugin.isDeviceSupporting(features);
+  }
+
+  Future<WikitudeResponse> requestARPermissions() async {
+    return await WikitudePlugin.requestARPermissions(features);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +64,7 @@ class MyBottomNavigation extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              if (ModalRoute.of(context)?.settings.name != '/camera') {
-                Navigator.of(context).pushNamed('/camera');
-              }
+              navigateToCamera();
             },
             icon: const Icon(
               Icons.camera,

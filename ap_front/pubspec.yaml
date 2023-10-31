@@ -64,6 +64,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/loading.gif
+    - samples/
+    - samples/03_MultipleTargets_1_MultipleTargets/
+    - samples/03_MultipleTargets_1_MultipleTargets/js/
+    - samples/03_MultipleTargets_1_MultipleTargets/css/
+    - samples/03_MultipleTargets_1_MultipleTargets/assets/
+    - samples/03_MultipleTargets_1_MultipleTargets/assets/models/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
