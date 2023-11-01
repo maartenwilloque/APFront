@@ -1,3 +1,6 @@
+import 'package:ap_front/apis/album_api.dart';
+import 'package:ap_front/models/ARImageResponse.dart';
+import 'package:ap_front/pages/details.dart';
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +67,10 @@ class _ArWidget extends State<ArWidget> with WidgetsBindingObserver {
 
   Future<void> onArchitectWidgetCreated() async {
     architectWidget.load(
-        "samples/03_MultipleTargets_1_MultipleTargets/index.html",
-        onLoadSuccess,
-        onLoadFailed);
+        "samples/albums/index.html", onLoadSuccess, onLoadFailed);
     architectWidget.resume();
+    architectWidget.setJSONObjectReceivedCallback(
+        (result) => onJSONObjectReceived(result));
   }
 
   Future<void> onLoadSuccess() async {
@@ -77,5 +80,18 @@ class _ArWidget extends State<ArWidget> with WidgetsBindingObserver {
   Future<void> onLoadFailed(String error) async {
     debugPrint("Failed to load Architect World");
     debugPrint(error);
+  }
+
+  void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+    var imageScanned = ARImageResponse.fromJson(jsonObject);
+
+    await Future.delayed(Duration(seconds: 5));
+
+    AlbumApi.fetchAlbum(int.parse(imageScanned.albumId)).then((result) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DetailPage(id: result.albumId)),
+      );
+    });
   }
 }

@@ -12,10 +12,9 @@ var World = {
             Each target in the target collection is identified by its target name. By using this
             target name, it is possible to create an AR.ImageTrackable for every target in the target collection.
          */
-        this.targetCollectionResource = new AR.TargetCollectionResource("assets/albums.wtc", {
+        this.targetCollectionResource = new AR.TargetCollectionResource("assets/tracker.wtc", {
             onError: World.onError
         });
-
         /*
             This resource is then used as parameter to create an AR.ImageTracker. Optional parameters are passed as
             object in the last argument. In this case a callback function for the onTargetsLoaded trigger is set. Once
@@ -27,6 +26,7 @@ var World = {
             onError: World.onError
         });
 
+
         /*
             The next step is to create the augmentation. In this example an image resource is created and passed to the
             AR.ImageDrawable. A drawable is a visual component that can be connected to a Trackable
@@ -36,13 +36,28 @@ var World = {
         */
 
         /* Create overlay for page one of the magazine. */
-        var imgOne = new AR.ImageResource("assets/orderNowButton.png", {
-            onError: World.onError
-        });
-        var overlayOne = new AR.ImageDrawable(imgOne, 1, {
+        // var imgOne = new AR.ImageResource("assets/orderNowButton.png", {
+        //     onError: World.onError
+        // });
+        // var overlayOne = new AR.ImageDrawable(imgOne, 1, {
+        // });
+
+
+        var ratingwidget = new AR.HtmlDrawable({
+            uri: "assets/rating.html"
+        }, 0.2, {
+            viewportWidth: 100,
+            viewportHeight: 100,
+            backgroundColor: "#00000000",
             translate: {
-                x: -0.15
-            }
+                x: 0.42,
+                y: -0.25
+            },
+            horizontalAnchor: AR.CONST.HORIZONTAL_ANCHOR.RIGHT,
+            verticalAnchor: AR.CONST.VERTICAL_ANCHOR.TOP,
+            clickThroughEnabled: true,
+            allowDocumentLocationChanges: false,
+            onError: World.onError
         });
 
         /*
@@ -53,11 +68,20 @@ var World = {
             Use a specific target name to respond only to a certain target or use a wildcard to respond to any or a
             certain group of targets.
         */
-        this.pageOne = new AR.ImageTrackable(this.tracker, "pageOne", {
+        this.albumTracker = new AR.ImageTrackable(this.tracker, "*", {
             drawables: {
-                cam: overlayOne
+                cam: ratingwidget
             },
-            onImageRecognized: World.hideInfoBar,
+            onImageRecognized: 
+             function (target) {
+               AR.platform.sendJSONObject({
+                "albumId": target.name
+
+                });
+                 console.log(target.toString())
+                World.hideInfoBar();
+            }, 
+
             onError: World.onError
         });
     },
