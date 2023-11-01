@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class RatingApi {
   static String server = 'user-service-maartenwilloque.cloud.okteto.net';
 
+//Post Rating
   static Future<Rating> createRating(Rating rating) async {
     var url = Uri.https(server, '/api/rating');
 
@@ -22,6 +23,7 @@ class RatingApi {
     }
   }
 
+//Get Rating
   static Future<AverageRating> getRating(String albumId) async {
     var url = Uri.https(server, '/api/rating/average/$albumId');
 

@@ -4,7 +4,7 @@ import 'dart:convert';
 class ThumbnailApi {
   static String server = 'musicbrainz.org/ws/2/release/';
   static String result = '';
-
+//Get Thumbnail
   static Future<String> fetchThumbnail(band, album, {int release = 0}) async {
     var url = Uri.parse(
         'http://musicbrainz.org/ws/2/release/?query=release:$album%20AND%20artist:$band&fmt=json');

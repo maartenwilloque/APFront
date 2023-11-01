@@ -14,11 +14,12 @@ class AlbumApi {
     if (response.statusCode == 200) {
       return Album.fromJson(jsonDecode(response.body));
     } else {
-      sleep(Duration(seconds: 1));
+      sleep(const Duration(seconds: 1));
       return fetchAlbum(id);
     }
   }
 
+// Count albums
   static Future<int> countAlbums() async {
     var url = Uri.https(server, '/api/albums');
     int result = 1;
@@ -31,6 +32,7 @@ class AlbumApi {
     return result;
   }
 
+// Get all albums
   static Future<List<Album>> fetchAlbums() async {
     var url = Uri.https(server, '/api/albums');
     final response = await http.get(url);
@@ -46,6 +48,7 @@ class AlbumApi {
     }
   }
 
+  // Get band with albums
   static Future<List<Album>> fetchAlbumsByBand(String bandId) async {
     var url = Uri.https(server, '/api/albums');
     final response = await http.get(url);
