@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:ap_front/models/album.dart';
 
 class AlbumApi {
-  static String server = 'album-service-maartenwilloque.cloud.okteto.net';
+  static String server = 'api-gateway-maartenwilloque.cloud.okteto.net';
 
   static Future<Album> fetchAlbum(int id) async {
-    var url = Uri.https(server, '/api/album/$id');
+    var url = Uri.https(server, '/album/$id');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -21,7 +21,7 @@ class AlbumApi {
 
 // Count albums
   static Future<int> countAlbums() async {
-    var url = Uri.https(server, '/api/albums');
+    var url = Uri.https(server, '/albums');
     int result = 1;
 
     final response = await http.get(url);
@@ -34,7 +34,7 @@ class AlbumApi {
 
 // Get all albums
   static Future<List<Album>> fetchAlbums() async {
-    var url = Uri.https(server, '/api/albums');
+    var url = Uri.https(server, '/albums');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List<dynamic> albumJson = json.decode(response.body);
@@ -50,7 +50,7 @@ class AlbumApi {
 
   // Get band with albums
   static Future<List<Album>> fetchAlbumsByBand(String bandId) async {
-    var url = Uri.https(server, '/api/albums');
+    var url = Uri.https(server, '/albums');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List<dynamic> albumJson = json.decode(response.body);

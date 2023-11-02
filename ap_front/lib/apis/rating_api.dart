@@ -5,11 +5,11 @@ import 'package:ap_front/models/rating.dart';
 import 'package:http/http.dart' as http;
 
 class RatingApi {
-  static String server = 'user-service-maartenwilloque.cloud.okteto.net';
+  static String server = 'api-gateway-maartenwilloque.cloud.okteto.net';
 
 //Post Rating
   static Future<Rating> createRating(Rating rating) async {
-    var url = Uri.https(server, '/api/rating');
+    var url = Uri.https(server, '/rating');
 
     final http.Response response = await http.post(url,
         headers: <String, String>{
@@ -25,7 +25,7 @@ class RatingApi {
 
 //Get Rating
   static Future<AverageRating> getRating(String albumId) async {
-    var url = Uri.https(server, '/api/rating/average/$albumId');
+    var url = Uri.https(server, '/rating/$albumId');
 
     final http.Response response = await http.get(url);
     if (response.statusCode == 200) {
