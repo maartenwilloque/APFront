@@ -1,9 +1,10 @@
 import 'package:ap_front/models/song.dart';
 import 'package:flutter/material.dart';
+import "package:ap_front/apis/spotify_api.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 class SongList extends StatelessWidget {
   final List<Song> songs;
-
   const SongList({super.key, required this.songs});
 
   @override
@@ -41,8 +42,13 @@ class SongList extends StatelessWidget {
   }
 
   void playSong(Song song) {
-    // Implement your play functionality here
-    // You can start playing the selected song.
+    //get song link from spotify
+    searchSpotify(song.title).then((value) async {
+      //open song url in browser
+      if (!await launchUrl(Uri.parse(value[0]))) {
+        throw Exception('Could not launch $value[0]');
+      }
+    });
   }
 
   String convertTime(int duration) {

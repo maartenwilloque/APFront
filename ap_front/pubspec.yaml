@@ -38,6 +38,7 @@ dependencies:
   camera: ^0.9.4+5
   augmented_reality_plugin_wikitude:
     path: ./plugin/augmented_reality_plugin_wikitude/
+  url_launcher: ^6.2.1
 
 dev_dependencies:
   flutter_test:
