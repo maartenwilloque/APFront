@@ -85,9 +85,10 @@ class _ArWidget extends State<ArWidget> with WidgetsBindingObserver {
   void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
     var imageScanned = ARImageResponse.fromJson(jsonObject);
 
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     AlbumApi.fetchAlbum(int.parse(imageScanned.albumId)).then((result) {
+      dispose();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DetailPage(id: result.albumId)),

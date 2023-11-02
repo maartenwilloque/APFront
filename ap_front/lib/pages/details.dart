@@ -8,7 +8,7 @@ import 'package:ap_front/widgets/ratingstars.dart';
 import 'package:ap_front/widgets/songlistdisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
-//import 'package:ap_front/pages/albumcollection.dart';
+import 'package:ap_front/pages/albumcollection.dart';
 
 class DetailPage extends StatefulWidget {
   final String id;
@@ -24,10 +24,11 @@ class _DetailPageState extends State<DetailPage> {
   bool _isLoading = true;
   String artistId = "";
 
-  /*void _goToAlbumList(BuildContext context, String artistID) {
+  void _goToAlbumList(BuildContext context, String artistID) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => AlbumCollection(artistId: artistID)));
-  }*/
+        builder: (context) =>
+            AlbumCollection(artistId: artistID, album: album!)));
+  }
 
   Future<void> _getAlbum() async {
     int albumId = int.parse(widget.id);
@@ -132,7 +133,7 @@ class _DetailPageState extends State<DetailPage> {
                 label: Text("More from this artist",
                     style: theme.displaySmall, textAlign: TextAlign.center),
                 onPressed: () {
-                  //_goToAlbumList(context, artistId);
+                  _goToAlbumList(context, artistId);
                 }),
             const SizedBox(
               height: 10,
