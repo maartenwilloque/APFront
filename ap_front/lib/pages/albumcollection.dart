@@ -2,11 +2,14 @@ import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
 import 'package:flutter/material.dart';
 import 'package:ap_front/apis/album_api.dart';
+import 'package:ap_front/models/album.dart';
 
 class AlbumCollection extends StatefulWidget {
   final String artistId;
+  final Album album;
 
-  const AlbumCollection({super.key, required this.artistId});
+  const AlbumCollection(
+      {super.key, required this.artistId, required this.album});
 
   @override
   _AlbumCollectionState createState() => _AlbumCollectionState();
@@ -22,7 +25,8 @@ class _AlbumCollectionState extends State<AlbumCollection> {
   }
 
   Future<void> _fetchAlbums() async {
-    await AlbumApi.fetchAlbumsByBand(widget.artistId).then((result) {
+    await AlbumApi.fetchAlbumsByBand(widget.artistId, widget.album)
+        .then((result) {
       setState(() {
         albums = result;
       });

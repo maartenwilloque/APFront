@@ -54,7 +54,9 @@ class _MyBottomNavigation extends State<MyBottomNavigation> {
             onPressed: () {
               String? currentRoute = ModalRoute.of(context)?.settings.name;
               if (currentRoute != '/home' && currentRoute != '/') {
-                Navigator.of(context).pushNamed('/home');
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/home', (route) => false);
+                dispose();
               }
             },
             icon: const Icon(

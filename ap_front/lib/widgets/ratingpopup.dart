@@ -26,7 +26,7 @@ class _RatingPopupState extends State<RatingPopup> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Rate this album"),
-      content: Container(
+      content: SizedBox(
         width: double.maxFinite,
         child: Column(
           mainAxisSize: MainAxisSize.min,

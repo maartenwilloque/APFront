@@ -49,14 +49,15 @@ class AlbumApi {
   }
 
   // Get band with albums
-  static Future<List<Album>> fetchAlbumsByBand(String bandId) async {
+  static Future<List<Album>> fetchAlbumsByBand(String bandId, album) async {
     var url = Uri.https(server, '/albums');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List<dynamic> albumJson = json.decode(response.body);
       List<Album> albums = albumJson
           .map((dynamic item) => Album.fromJson(item))
-          .where((element) => element.band.bandId == bandId)
+          .where((element) =>
+              element.band.bandId == bandId && element.albumId != album.albumId)
           .toList()
           .cast<Album>();
       return albums;
