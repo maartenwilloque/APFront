@@ -1,6 +1,7 @@
 import 'package:ap_front/apis/album_api.dart';
 import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
+import 'package:ap_front/models/band.dart';
 import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/banddisplay.dart';
 import 'package:ap_front/widgets/ratingpopup.dart';
@@ -23,11 +24,13 @@ class _DetailPageState extends State<DetailPage> {
   String _imageUrl = '';
   bool _isLoading = true;
   String artistId = "";
+  String artistName = "";
 
   void _goToAlbumList(BuildContext context, String artistID) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => AlbumCollection(
         artistId: artistID,
+        artistName: artistName,
         album: album!,
       ),
     ));
@@ -39,6 +42,7 @@ class _DetailPageState extends State<DetailPage> {
       setState(() {
         album = result;
         artistId = album?.band.bandId ?? "";
+        artistName = album?.band.name ?? "";
       });
     });
 
