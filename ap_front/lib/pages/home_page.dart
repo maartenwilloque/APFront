@@ -77,7 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: IconButton(
           icon: const Icon(Icons.person_2_outlined),
           onPressed: () {
-            showDialog(context: context, builder: (context) => const ProfilePopup());
+            showDialog(
+                context: context, builder: (context) => const ProfilePopup());
           },
         ),
         title: Text(
@@ -95,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const TitleDisplayWidget(
-              title: 'Album of the Day',
+              title: 'Suggested Album: ',
             ),
             const SizedBox(
               height: heightBetweenElements,

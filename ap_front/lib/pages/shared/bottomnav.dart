@@ -75,17 +75,6 @@ class _MyBottomNavigation extends State<MyBottomNavigation> {
           //open camera button
           IconButton(
             onPressed: () {
-              if (ModalRoute.of(context)?.settings.name != '/history') {
-                Navigator.of(context).pushNamed('/history');
-              }
-            },
-            icon: const Icon(
-              Icons.book_rounded,
-              color: Colors.white,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
               if (ModalRoute.of(context)?.settings.name != '/review') {
                 Navigator.of(context).pushNamed('/review');
               }
