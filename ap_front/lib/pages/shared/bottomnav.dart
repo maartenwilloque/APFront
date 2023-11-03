@@ -56,7 +56,6 @@ class _MyBottomNavigation extends State<MyBottomNavigation> {
               if (currentRoute != '/home' && currentRoute != '/') {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/home', (route) => false);
-                dispose();
               }
             },
             icon: const Icon(
