@@ -9,6 +9,7 @@ import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/albumdisplay.dart';
 import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
+import 'package:ap_front/widgets/profilePopup.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -71,6 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: scheme.primary,
+        leading: IconButton(
+          icon: const Icon(Icons.person_2_outlined),
+          onPressed: () {
+            showDialog(context: context, builder: (context) => ProfilePopup());
+          },
+        ),
         title: Text(
           widget.title,
           style: theme.displayLarge,

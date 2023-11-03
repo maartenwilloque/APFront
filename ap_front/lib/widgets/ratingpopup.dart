@@ -1,6 +1,7 @@
 import 'package:ap_front/apis/rating_api.dart';
 import 'package:ap_front/models/rating.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class RatingPopup extends StatefulWidget {
   final String albumId;
@@ -15,7 +16,8 @@ class RatingPopup extends StatefulWidget {
 
 class _RatingPopupState extends State<RatingPopup> {
   int rating = 0;
-  String name = "";
+  String username = LocalStorage('user_storage').getItem('username') ?? '';
+  String guid = LocalStorage('user_storage').getItem('guid') ?? '';
 
   void saveRating(String newalbumId, String newname, int newscore) {
     Rating rating = Rating(albumId: newalbumId, score: newscore, name: newname);
@@ -53,13 +55,10 @@ class _RatingPopupState extends State<RatingPopup> {
                 ));
               }),
             ),
-            TextField(
-              decoration: const InputDecoration(labelText: "State your name"),
-              onChanged: (value) {
-                setState(() {
-                  name = value;
-                });
-              },
+            const SizedBox(height: 10),
+            Text(
+              "Rating for: $username",
+              style: const TextStyle(fontSize: 20),
             ),
           ],
         ),
@@ -67,7 +66,7 @@ class _RatingPopupState extends State<RatingPopup> {
       actions: <Widget>[
         ElevatedButton(
           onPressed: () {
-            saveRating(widget.albumId, name, rating);
+            saveRating(widget.albumId, guid, rating);
             // Perform the submission action with the rating and name
             Navigator.of(context).pop();
           },

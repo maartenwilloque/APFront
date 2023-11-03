@@ -16,8 +16,8 @@ class RatingApi {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(rating));
-    if (response.statusCode == 201) {
-      return Rating.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return response.body as Rating;
     } else {
       throw Exception('Failed to create rating');
     }
