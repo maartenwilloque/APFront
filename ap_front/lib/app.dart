@@ -3,6 +3,7 @@ import 'package:ap_front/pages/home_page.dart';
 import 'package:ap_front/pages/camera_view.dart';
 import 'package:ap_front/pages/review.dart';
 import '/pages/history.dart';
+import 'package:localstorage/localstorage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,9 +30,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/camera': (context) => const CameraPage(),
         '/review': (context) => const ReviewPage(),
-        '/history': (context) => const HistoryPage(
-              title: 'Review History',
-            ),
         '/home': (context) => const MyHomePage(title: 'Album-Opedia Home '),
       },
     );
