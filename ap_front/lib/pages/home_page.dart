@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         leading: IconButton(
           icon: const Icon(Icons.person_2_outlined),
           onPressed: () {
-            showDialog(context: context, builder: (context) => ProfilePopup());
+            showDialog(context: context, builder: (context) => const ProfilePopup());
           },
         ),
         title: Text(
