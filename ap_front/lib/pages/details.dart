@@ -26,8 +26,11 @@ class _DetailPageState extends State<DetailPage> {
 
   void _goToAlbumList(BuildContext context, String artistID) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            AlbumCollection(artistId: artistID, album: album!)));
+      builder: (context) => AlbumCollection(
+        artistId: artistID,
+        album: album!,
+      ),
+    ));
   }
 
   Future<void> _getAlbum() async {
@@ -42,8 +45,10 @@ class _DetailPageState extends State<DetailPage> {
     if (album == null) {
       return;
     } else {
-      await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
-          .then((result) {
+      await ThumbnailApi.fetchThumbnail(
+        album!.band.name,
+        album!.title,
+      ).then((result) {
         setState(() {
           _imageUrl = result;
         });
@@ -130,8 +135,11 @@ class _DetailPageState extends State<DetailPage> {
                 backgroundColor: scheme.primary,
                 foregroundColor: Colors.white,
                 focusColor: scheme.inversePrimary,
-                label: Text("More from this artist",
-                    style: theme.displaySmall, textAlign: TextAlign.center),
+                label: Text(
+                  "More from this artist",
+                  style: theme.displaySmall,
+                  textAlign: TextAlign.center,
+                ),
                 onPressed: () {
                   _goToAlbumList(context, artistId);
                 }),

@@ -1,3 +1,5 @@
+import 'package:ap_front/apis/thumbnail_api.dart';
+import 'package:ap_front/models/albumAndUrl.dart';
 import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ class AlbumCollection extends StatefulWidget {
 
 class _AlbumCollectionState extends State<AlbumCollection> {
   List<dynamic> albums = [];
+  List<AlbumAndUrl> albumUrls = [];
 
   @override
   void initState() {
@@ -30,6 +33,28 @@ class _AlbumCollectionState extends State<AlbumCollection> {
       setState(() {
         albums = result;
       });
+    });
+
+    List<AlbumAndUrl> albumAndUrlList = [];
+    for (Album album in albums) {
+      String albumUrl = "";
+      await ThumbnailApi.fetchThumbnail(
+        album.band.name,
+        album.title,
+      ).then((result) {
+        albumUrl = result;
+      });
+
+      AlbumAndUrl albumAndUrl = AlbumAndUrl(
+        albumId: album.albumId,
+        albumUrl: albumUrl,
+      );
+
+      albumAndUrlList.add(albumAndUrl);
+    }
+
+    setState(() {
+      albumUrls = albumAndUrlList;
     });
   }
 
@@ -60,9 +85,13 @@ class _AlbumCollectionState extends State<AlbumCollection> {
                 return ListTile(
                   title: Text(albums[index].title),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            DetailPage(id: albums[index].albumId)));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DetailPage(
+                          id: albums[index].albumId,
+                        ),
+                      ),
+                    );
                   },
                 );
               },

@@ -43,8 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
 
-    await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
-        .then((result) {
+    await ThumbnailApi.fetchThumbnail(
+      album!.band.name,
+      album!.title,
+    ).then((result) {
       setState(() {
         _imageUrl = result;
       });
