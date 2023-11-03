@@ -14,7 +14,7 @@ class User {
   User({required this.username, required this.GUID});
 
   toJSONEncodable() {
-    Map<String, dynamic> m = new Map();
+    Map<String, dynamic> m = {};
 
     m['username'] = username;
     m['guid'] = GUID;
@@ -50,16 +50,16 @@ class _ProfilePopupState extends State<ProfilePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter Username'),
+          title: const Text('Enter Username'),
           content: TextField(
             onChanged: (value) {
               _username = value;
             },
-            decoration: InputDecoration(hintText: 'Username'),
+            decoration: const InputDecoration(hintText: 'Username'),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 //create GUID with random
                 var random = Random();
@@ -92,7 +92,7 @@ class _ProfilePopupState extends State<ProfilePopup> {
           children: <Widget>[
             Text(
               'Username: $_username',
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             TextButton(
               child: const Text('Change Username'),
