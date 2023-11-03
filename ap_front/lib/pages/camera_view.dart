@@ -2,7 +2,6 @@
 
 import 'package:ap_front/widgets/arwidget.dart';
 import 'package:flutter/material.dart';
-import 'package:ap_front/pages/shared/bottomnav.dart';
 
 //camera page
 class CameraPage extends StatefulWidget {
@@ -13,55 +12,8 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  // CameraController? controller;
-  // String errorMessage = '';
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   // Initialize the camera
-  //   availableCameras().then((cameras) {
-  //     if (cameras.isEmpty) {
-  //       setState(() {
-  //         errorMessage = 'No cameras found.';
-  //       });
-  //     } else {
-  //       // Select the first camera in the list
-  //       controller = CameraController(cameras[0], ResolutionPreset.high);
-  //       controller!.initialize().then((_) {
-  //         if (!mounted) {
-  //           return;
-  //         }
-  //         setState(() {});
-  //       });
-  //     }
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   // Dispose of the camera controller when the widget is removed
-  //   controller?.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // if (errorMessage.isNotEmpty) {
-    //   return Center(
-    //     child: Text(
-    //       errorMessage,
-    //       style: const TextStyle(fontSize: 18),
-    //     ),
-    //   );
-    // }
-
-    // if (controller == null || !controller!.value.isInitialized) {
-    //   return const Center(
-    //       child: CircularProgressIndicator()); // Loading indicator
-    // }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Camera Page'),
@@ -69,7 +21,13 @@ class _CameraPageState extends State<CameraPage> {
       body: const Center(
         child: ArWidget(),
       ),
-      bottomNavigationBar: const MyBottomNavigation(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          dispose();
+          Navigator.of(context).pop();
+        },
+        child: const Icon(Icons.arrow_back),
+      ),
     );
   }
 }
