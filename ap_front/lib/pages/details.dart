@@ -1,6 +1,7 @@
 import 'package:ap_front/apis/album_api.dart';
 import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
+import 'package:ap_front/models/band.dart';
 import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/banddisplay.dart';
 import 'package:ap_front/widgets/ratingpopup.dart';
@@ -23,11 +24,16 @@ class _DetailPageState extends State<DetailPage> {
   String _imageUrl = '';
   bool _isLoading = true;
   String artistId = "";
+  String artistName = "";
 
   void _goToAlbumList(BuildContext context, String artistID) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            AlbumCollection(artistId: artistID, album: album!)));
+      builder: (context) => AlbumCollection(
+        artistId: artistID,
+        artistName: artistName,
+        album: album!,
+      ),
+    ));
   }
 
   Future<void> _getAlbum() async {
@@ -36,14 +42,17 @@ class _DetailPageState extends State<DetailPage> {
       setState(() {
         album = result;
         artistId = album?.band.bandId ?? "";
+        artistName = album?.band.name ?? "";
       });
     });
 
     if (album == null) {
       return;
     } else {
-      await ThumbnailApi.fetchThumbnail(album!.band.name, album!.title)
-          .then((result) {
+      await ThumbnailApi.fetchThumbnail(
+        album!.band.name,
+        album!.title,
+      ).then((result) {
         setState(() {
           _imageUrl = result;
         });
@@ -130,8 +139,11 @@ class _DetailPageState extends State<DetailPage> {
                 backgroundColor: scheme.primary,
                 foregroundColor: Colors.white,
                 focusColor: scheme.inversePrimary,
-                label: Text("More from this artist",
-                    style: theme.displaySmall, textAlign: TextAlign.center),
+                label: Text(
+                  "More from this artist",
+                  style: theme.displaySmall,
+                  textAlign: TextAlign.center,
+                ),
                 onPressed: () {
                   _goToAlbumList(context, artistId);
                 }),

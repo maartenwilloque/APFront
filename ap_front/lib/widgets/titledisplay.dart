@@ -15,14 +15,19 @@ class TitleDisplayWidget extends StatelessWidget {
 
     return Container(
       width: 290.0,
-      height: 50.0,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(12),
         color: scheme.primary,
       ),
-      child: Center(
-        child: Text(title, style: theme.displaySmall),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12.0,
+          vertical: 12.0,
+        ), // Adds padding to the right and left
+        child: Center(
+          child: Text(title, style: theme.displaySmall),
+        ),
       ),
     );
   }
