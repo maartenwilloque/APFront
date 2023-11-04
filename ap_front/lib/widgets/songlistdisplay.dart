@@ -10,6 +10,8 @@ class SongList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: ListView.builder(
@@ -19,11 +21,20 @@ class SongList extends StatelessWidget {
           itemBuilder: (context, index) {
             final song = songs[index];
             return ListTile(
-              leading: Text((index + 1).toString()),
-              title: Text(song.title),
+              leading: Text(
+                (index + 1).toString(),
+                style: theme.bodySmall,
+              ),
+              title: Text(
+                song.title,
+                style: theme.bodySmall?.copyWith(
+                  fontFamily: "Gill Sans MT Bold",
+                  color: scheme.primary,
+                ),
+              ),
               subtitle: Text(
                 convertTime(song.duration),
-                style: theme.labelMedium,
+                style: theme.bodySmall,
               ),
               trailing: IconButton(
                 icon: const Icon(

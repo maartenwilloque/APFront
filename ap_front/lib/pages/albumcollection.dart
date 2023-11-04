@@ -83,6 +83,7 @@ class _AlbumCollectionState extends State<AlbumCollection> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
@@ -146,7 +147,10 @@ class _AlbumCollectionState extends State<AlbumCollection> {
                                       isSmall: true,
                                     ),
                             ),
-                            Text(albums[index].title),
+                            Text(
+                              albums[index].title,
+                              style: theme.bodyLarge,
+                            ),
                           ],
                         ),
                         onTap: () {

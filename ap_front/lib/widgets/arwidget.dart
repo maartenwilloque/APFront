@@ -37,8 +37,12 @@ class _ArWidget extends State<ArWidget> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return Container(
-      decoration: const BoxDecoration(color: Colors.black),
+      decoration: BoxDecoration(
+        color: scheme.primary,
+      ),
       child: architectWidget, //ar widget
     );
   }
