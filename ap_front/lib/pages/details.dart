@@ -1,11 +1,13 @@
 import 'package:ap_front/apis/album_api.dart';
 import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
+import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/banddisplay.dart';
 import 'package:ap_front/widgets/ratingpopup.dart';
 import 'package:ap_front/widgets/ratingstars.dart';
 import 'package:ap_front/widgets/songlistdisplay.dart';
+import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
 import 'package:ap_front/pages/albumcollection.dart';
@@ -119,9 +121,10 @@ class _DetailPageState extends State<DetailPage> {
             const SizedBox(
               height: heightBetweenElements,
             ),
-            Text(
-              album?.title ?? "title not found",
-              style: theme.headlineLarge,
+            TitleDisplayWidget(
+              title: album == null
+                  ? "loading album..."
+                  : album?.title ?? "title not found",
             ),
             BandMembersList(
               bandName: album?.band.name ?? "",
@@ -134,22 +137,24 @@ class _DetailPageState extends State<DetailPage> {
             const SizedBox(
               height: 10,
             ),
-            FloatingActionButton.extended(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(290, 50),
                 backgroundColor: scheme.primary,
-                foregroundColor: Colors.white,
-                focusColor: scheme.inversePrimary,
-                label: Text(
-                  "More from this artist",
-                  style: theme.displaySmall,
-                  textAlign: TextAlign.center,
-                ),
-                onPressed: () {
-                  _goToAlbumList(context, artistId);
-                }),
+              ),
+              onPressed: () {
+                _goToAlbumList(context, artistId);
+              },
+              child: Text(
+                "More from this artist",
+                style: theme.displaySmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SongList(songs: album?.songs ?? []),
             const SizedBox(
               height: 10,
             ),
-            SongList(songs: album?.songs ?? []),
           ],
         )),
       ),

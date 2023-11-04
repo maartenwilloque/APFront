@@ -1,4 +1,5 @@
 import 'package:ap_front/models/album.dart';
+import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:flutter/material.dart';
 
 class AlbumDisplayWidget extends StatelessWidget {
@@ -13,19 +14,6 @@ class AlbumDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     ColorScheme scheme = Theme.of(context).colorScheme;
-
-    // Text Style for Loading (maybe need to be moved so it can used everywhere)
-    const TextStyle loadingHeadline = TextStyle(
-      fontSize: 19,
-      fontFamily: "Gill Sans MT Bold",
-      color: Colors.grey,
-    );
-
-    const TextStyle loadingBody = TextStyle(
-      fontSize: 17,
-      fontFamily: "Gill Sans MT",
-      color: Colors.grey,
-    );
 
     late Text albumName;
     late Text bandName;

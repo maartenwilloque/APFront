@@ -22,11 +22,14 @@ class TitleDisplayWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 12.0,
-          vertical: 12.0,
+          horizontal: 15.0,
+          vertical: 15.0,
         ), // Adds padding to the right and left
         child: Center(
-          child: Text(title, style: theme.displaySmall),
+          child: Text(
+            title,
+            style: theme.displaySmall,
+          ),
         ),
       ),
     );

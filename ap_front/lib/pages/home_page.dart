@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const TitleDisplayWidget(
-              title: 'Suggested Album: ',
+              title: 'Suggested Album',
             ),
             const SizedBox(
               height: heightBetweenElements,

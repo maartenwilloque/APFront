@@ -1,5 +1,6 @@
 import 'package:ap_front/apis/rating_api.dart';
 import 'package:ap_front/models/rating.dart';
+import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -26,8 +27,13 @@ class _RatingPopupState extends State<RatingPopup> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return AlertDialog(
-      title: const Text("Rate this album"),
+      title: const TitleDisplayWidget(
+        title: "Rate this album",
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: Column(
@@ -57,20 +63,27 @@ class _RatingPopupState extends State<RatingPopup> {
             ),
             const SizedBox(height: 10),
             Text(
-              "Rating for: $username",
-              style: const TextStyle(fontSize: 20),
+              "Rating for:\u2002$username",
+              style: theme.headlineSmall,
             ),
           ],
         ),
       ),
       actions: <Widget>[
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            fixedSize: const Size(290, 50),
+            backgroundColor: scheme.primary,
+          ),
           onPressed: () {
             saveRating(widget.albumId, guid, rating);
             // Perform the submission action with the rating and name
             Navigator.of(context).pop();
           },
-          child: const Text("Send"),
+          child: Text(
+            "Send",
+            style: theme.displaySmall,
+          ),
         ),
       ],
     );

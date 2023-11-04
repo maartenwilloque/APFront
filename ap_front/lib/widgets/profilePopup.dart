@@ -1,3 +1,4 @@
+import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:math';
@@ -49,17 +50,28 @@ class _ProfilePopupState extends State<ProfilePopup> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        TextTheme theme = Theme.of(context).textTheme;
+
         return AlertDialog(
-          title: const Text('Enter Username'),
+          title: Text(
+            'Enter Username',
+            style: theme.headlineMedium,
+          ),
           content: TextField(
             onChanged: (value) {
               _username = value;
             },
-            decoration: const InputDecoration(hintText: 'Username'),
+            decoration: InputDecoration(
+              hintText: 'Username',
+              hintStyle: theme.bodyMedium,
+            ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: Text(
+                'OK',
+                style: theme.bodyMedium,
+              ),
               onPressed: () {
                 //create GUID with random
                 var random = Random();
@@ -83,19 +95,29 @@ class _ProfilePopupState extends State<ProfilePopup> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return AlertDialog(
-      title: const Text("Profile"),
+      title: const TitleDisplayWidget(
+        title: "Profile",
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Username: $_username',
-              style: const TextStyle(fontSize: 20),
+              'Username:\u2002$_username',
+              style: theme.headlineSmall,
             ),
             TextButton(
-              child: const Text('Change Username'),
+              child: Text(
+                'Change Username',
+                style: theme.bodyLarge?.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
               onPressed: () {
                 _showUsernamePopup();
               },
@@ -105,10 +127,17 @@ class _ProfilePopupState extends State<ProfilePopup> {
       ),
       actions: <Widget>[
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            fixedSize: const Size(290, 50),
+            backgroundColor: scheme.primary,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('Close'),
+          child: Text(
+            'Close',
+            style: theme.displaySmall,
+          ),
         ),
       ],
     );
