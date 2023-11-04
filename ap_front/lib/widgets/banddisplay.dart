@@ -27,18 +27,41 @@ class _BandMembersListState extends State<BandMembersList> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: TextButton(
-            child: Text(
-              widget.bandName != ""
-                  ? "${widget.bandName}\u2002${!isExpanded ? "\u21E9" : "\u21E7"}"
-                  : "",
-              style: theme.headlineLarge,
+          title: Center(
+            child: TextButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "${widget.bandName}",
+                    style: theme.headlineLarge,
+                  ),
+                  if (widget.bandName != "")
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: scheme.primary,
+                        ),
+                        child: Icon(
+                          isExpanded
+                              ? Icons.keyboard_arrow_down
+                              : Icons.keyboard_arrow_up,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                ],
+              ),
+              onPressed: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
             ),
-            onPressed: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
-            },
           ),
         ),
         if (isExpanded)
