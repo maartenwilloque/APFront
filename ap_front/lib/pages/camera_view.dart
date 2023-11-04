@@ -14,9 +14,21 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+    ColorScheme scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Camera Page'),
+        backgroundColor: scheme.primary,
+        title: Text(
+          'Camera Page',
+          style: theme.displayLarge,
+        ),
+        toolbarHeight: 75,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        centerTitle: true,
       ),
       body: const Center(
         child: ArWidget(),
