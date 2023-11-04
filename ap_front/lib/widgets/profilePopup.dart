@@ -1,3 +1,4 @@
+import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:math';
@@ -83,8 +84,12 @@ class _ProfilePopupState extends State<ProfilePopup> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+
     return AlertDialog(
-      title: const Text("Profile"),
+      title: const TitleDisplayWidget(
+        title: "Profile",
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: Column(
@@ -92,10 +97,10 @@ class _ProfilePopupState extends State<ProfilePopup> {
           children: <Widget>[
             Text(
               'Username: $_username',
-              style: const TextStyle(fontSize: 20),
+              style: theme.headlineSmall,
             ),
             TextButton(
-              child: const Text('Change Username'),
+              child: Text('Change Username', style: theme.bodyLarge),
               onPressed: () {
                 _showUsernamePopup();
               },

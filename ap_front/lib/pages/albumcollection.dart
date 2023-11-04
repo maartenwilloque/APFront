@@ -2,6 +2,7 @@ import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/albumAndUrl.dart';
 import 'package:ap_front/pages/details.dart';
 import 'package:ap_front/pages/shared/bottomnav.dart';
+import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
@@ -98,13 +99,20 @@ class _AlbumCollectionState extends State<AlbumCollection> {
           const SizedBox(
             height: heightBetweenElements,
           ),
-          albums.isEmpty && !loadingAlbums
-              ? Center(
-                  child: Text(
-                    'No other albums were found for this artist.',
-                    style: theme.headlineSmall,
-                  ),
-                )
+          albums.isEmpty
+              ? loadingAlbums
+                  ? const Center(
+                      child: Text(
+                        'loading albums...',
+                        style: loadingHeadline,
+                      ),
+                    )
+                  : Center(
+                      child: Text(
+                        'No other albums were found for this artist.',
+                        style: theme.headlineSmall,
+                      ),
+                    )
               : Expanded(
                   child: SizedBox(
                   height: 200,

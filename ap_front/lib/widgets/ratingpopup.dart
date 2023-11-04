@@ -26,6 +26,8 @@ class _RatingPopupState extends State<RatingPopup> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme theme = Theme.of(context).textTheme;
+
     return AlertDialog(
       title: const Text("Rate this album"),
       content: SizedBox(
@@ -58,7 +60,7 @@ class _RatingPopupState extends State<RatingPopup> {
             const SizedBox(height: 10),
             Text(
               "Rating for: $username",
-              style: const TextStyle(fontSize: 20),
+              style: theme.headlineSmall,
             ),
           ],
         ),
