@@ -48,8 +48,8 @@ class _BandMembersListState extends State<BandMembersList> {
                         ),
                         child: Icon(
                           isExpanded
-                              ? Icons.keyboard_arrow_down
-                              : Icons.keyboard_arrow_up,
+                              ? Icons.keyboard_arrow_up
+                              : Icons.keyboard_arrow_down,
                           color: Colors.white,
                         ),
                       ),
