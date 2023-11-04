@@ -1,3 +1,7 @@
+import 'package:ap_front/apis/album_api.dart';
+import 'package:ap_front/apis/thumbnail_api.dart';
+import 'package:ap_front/models/album.dart';
+import 'package:ap_front/models/albumAndUrl.dart';
 import 'package:ap_front/models/ratingWithAlbum.dart';
 import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/ratingstars.dart';
@@ -16,6 +20,8 @@ class ReviewPage extends StatefulWidget {
 
 class _ReviewPageState extends State<ReviewPage> {
   List<RatingWithAlbum> _ratingList = [];
+  List<Album> _albumList = [];
+  List<AlbumAndUrl> _albumAndUrlList = [];
   bool loading = true;
   String userId = "";
   String userName = "";
@@ -32,9 +38,41 @@ class _ReviewPageState extends State<ReviewPage> {
     await RatingApi.getRatingsWithAlbum(userId).then((result) {
       setState(() {
         _ratingList = result;
-        loading = false;
+        //loading = false;
       });
     });
+
+    for (RatingWithAlbum ratingWithAlbum in _ratingList) {
+      await AlbumApi.fetchAlbum(int.parse(ratingWithAlbum.album.albumId))
+          .then((result) {
+        setState(() {
+          _albumList.add(result);
+        });
+      });
+    }
+
+    for (Album album in _albumList) {
+      String albumUrl = "";
+      await ThumbnailApi.fetchThumbnail(
+        album.band.name,
+        album.title,
+      ).then((result) {
+        albumUrl = result;
+
+        AlbumAndUrl albumAndUrl = AlbumAndUrl(
+          albumId: album.albumId,
+          albumUrl: albumUrl,
+        );
+
+        setState(() {
+          _albumAndUrlList.add(albumAndUrl);
+        });
+
+        if (album == _albumList[_albumList.length - 1]) {
+          loading = false;
+        }
+      });
+    }
   }
 
   @override
@@ -94,6 +132,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                 _ratingList[index].album.title,
                                 style: theme.headlineSmall,
                               ),
+                              //Text(_ratingList[index].album), //TODO
                               RatingStars(
                                 rating: _ratingList[index].score.toDouble(),
                                 starSize: 25.0,
