@@ -19,7 +19,7 @@ class RatingApi {
         },
         body: jsonEncode(rating));
     if (response.statusCode == 200) {
-      return response.body as Rating;
+      return Rating.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to create rating');
     }
