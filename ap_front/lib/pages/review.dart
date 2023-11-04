@@ -4,6 +4,7 @@ import 'package:ap_front/models/album.dart';
 import 'package:ap_front/models/albumAndUrl.dart';
 import 'package:ap_front/models/ratingWithAlbum.dart';
 import 'package:ap_front/textstyles/loadingstyles.dart';
+import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/ratingstars.dart';
 import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
@@ -127,16 +128,42 @@ class _ReviewPageState extends State<ReviewPage> {
                         itemCount: _ratingList.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Column(children: <Widget>[
-                              Text(
-                                _ratingList[index].album.title,
-                                style: theme.headlineSmall,
+                            title: Row(children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 14.0),
+                                child: _albumAndUrlList.isNotEmpty
+                                    ? AlbumCoverWidget(
+                                        imageUrl: _albumAndUrlList
+                                            .firstWhere(
+                                              (x) =>
+                                                  x.albumId ==
+                                                  _albumList[index].albumId,
+                                              orElse: () => AlbumAndUrl(
+                                                albumId: '',
+                                                albumUrl: 'loading_url',
+                                              ),
+                                            )
+                                            .albumUrl,
+                                        isLoading: false,
+                                        isSmall: true,
+                                      )
+                                    : const AlbumCoverWidget(
+                                        imageUrl: '',
+                                        isLoading: true,
+                                        isSmall: true,
+                                      ),
                               ),
-                              //Text(_ratingList[index].album), //TODO
-                              RatingStars(
-                                rating: _ratingList[index].score.toDouble(),
-                                starSize: 25.0,
-                              ),
+                              Column(children: <Widget>[
+                                Text(
+                                  _ratingList[index].album.title,
+                                  style: theme.headlineSmall,
+                                ),
+                                //Text(_ratingList[index].album), //TODO
+                                RatingStars(
+                                  rating: _ratingList[index].score.toDouble(),
+                                  starSize: 25.0,
+                                ),
+                              ]),
                             ]),
                           );
                         },
