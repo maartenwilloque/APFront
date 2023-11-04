@@ -5,6 +5,7 @@ import 'package:ap_front/models/albumAndUrl.dart';
 import 'package:ap_front/models/ratingWithAlbum.dart';
 import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/albumcover.dart';
+import 'package:ap_front/widgets/deleteratingpopup.dart';
 import 'package:ap_front/widgets/ratingstars.dart';
 import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,10 @@ class _ReviewPageState extends State<ReviewPage> {
         }
       });
     }
+
+    if (_albumList.isEmpty) {
+      loading = false;
+    }
   }
 
   @override
@@ -118,57 +123,86 @@ class _ReviewPageState extends State<ReviewPage> {
                   ),
                 )
               : _ratingList.isEmpty
-                  ? const Text("No ratings found")
+                  ? Center(
+                      child: Text(
+                        "No ratings found!",
+                        style: theme.headlineSmall,
+                      ),
+                    )
                   : Expanded(
                       child: ListView.builder(
                         itemCount: _ratingList.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Row(children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 14.0),
-                                child: _albumAndUrlList.isNotEmpty
-                                    ? AlbumCoverWidget(
-                                        imageUrl: _albumAndUrlList
-                                            .firstWhere(
-                                              (x) =>
-                                                  x.albumId ==
-                                                  _albumList[index].albumId,
-                                              orElse: () => AlbumAndUrl(
-                                                albumId: '',
-                                                albumUrl: 'loading_url',
-                                              ),
-                                            )
-                                            .albumUrl,
-                                        isLoading: false,
-                                        isSmall: true,
-                                      )
-                                    : const AlbumCoverWidget(
-                                        imageUrl: '',
-                                        isLoading: true,
-                                        isSmall: true,
-                                      ),
-                              ),
-                              Column(children: <Widget>[
-                                Text(
-                                  _ratingList[index].album.title,
-                                  style: theme.headlineSmall,
-                                ),
-                                Text(
-                                  _albumList
-                                      .firstWhere((x) =>
-                                          x.albumId ==
-                                          _ratingList[index].album.albumId)
-                                      .band
-                                      .name,
-                                  style: theme.bodySmall,
-                                ),
-                                RatingStars(
-                                  rating: _ratingList[index].score.toDouble(),
-                                  starSize: 25.0,
-                                ),
-                              ]),
-                            ]),
+                            title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  _albumAndUrlList.isNotEmpty
+                                      ? AlbumCoverWidget(
+                                          imageUrl: _albumAndUrlList
+                                              .firstWhere(
+                                                (x) =>
+                                                    x.albumId ==
+                                                    _albumList[index].albumId,
+                                                orElse: () => AlbumAndUrl(
+                                                  albumId: '',
+                                                  albumUrl: 'loading_url',
+                                                ),
+                                              )
+                                              .albumUrl,
+                                          isLoading: false,
+                                          isSmall: true,
+                                        )
+                                      : const AlbumCoverWidget(
+                                          imageUrl: '',
+                                          isLoading: true,
+                                          isSmall: true,
+                                        ),
+                                  Column(children: <Widget>[
+                                    Text(
+                                      _ratingList[index].album.title,
+                                      style: theme.headlineSmall,
+                                    ),
+                                    Text(
+                                      _albumList
+                                          .firstWhere((x) =>
+                                              x.albumId ==
+                                              _ratingList[index].album.albumId)
+                                          .band
+                                          .name,
+                                      style: theme.bodySmall,
+                                    ),
+                                    RatingStars(
+                                      rating:
+                                          _ratingList[index].score.toDouble(),
+                                      starSize: 25.0,
+                                    ),
+                                  ]),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: scheme.primary,
+                                      size: 30.0,
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return DeleteRatingPopup(
+                                            ratingId: _ratingList[index].id,
+                                            ratingList: _ratingList,
+                                            albumName:
+                                                _ratingList[index].album.title,
+                                          );
+                                        },
+                                      ).then((result) async {
+                                        loading = true;
+                                        await getIDAndRating();
+                                      });
+                                    },
+                                  ),
+                                ]),
                           );
                         },
                       ),
