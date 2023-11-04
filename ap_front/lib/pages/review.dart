@@ -8,18 +8,25 @@ class ReviewPage extends StatefulWidget {
   const ReviewPage({super.key});
 
   @override
-  _ReviewPageState createState() => _ReviewPageState();
+  State<ReviewPage> createState() => _ReviewPageState();
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-  List<RatingWithAlbum> result = [];
+  List<RatingWithAlbum> _ratingList = [];
   bool loading = true;
-  final userId = LocalStorage('user_storage').getItem('guid');
+  String userId = "";
+
+  String getID() {
+    userId = LocalStorage('user_storage').getItem('guid');
+    return userId;
+  }
+
+  //final userId = LocalStorage('user_storage').getItem('guid');
   _getRating(String userId) async {
     loading = true;
     await RatingApi.getRatingsWithAlbum(userId).then((result) {
       setState(() {
-        result = result;
+        _ratingList = result;
         loading = false;
       });
     });
@@ -28,6 +35,7 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   void initState() {
     // TODO: implement initState
+    getID();
     _getRating(userId);
     super.initState();
   }
@@ -39,19 +47,19 @@ class _ReviewPageState extends State<ReviewPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             if (loading)
-              CircularProgressIndicator()
-            else if (result.isEmpty)
+              const CircularProgressIndicator()
+            else if (_ratingList.isEmpty)
               const Text("No ratings found")
             else
               Expanded(
                 child: ListView.builder(
-                  itemCount: result.length,
+                  itemCount: _ratingList.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(result[index].album.title),
-                      subtitle: Text(result[index].score.toString()),
+                      title: Text(_ratingList[index].album.title),
+                      subtitle: Text(_ratingList[index].score.toString()),
                     );
                   },
                 ),
@@ -59,7 +67,7 @@ class _ReviewPageState extends State<ReviewPage> {
           ],
         ),
       ),
-      bottomNavigationBar: MyBottomNavigation(),
+      bottomNavigationBar: const MyBottomNavigation(),
     );
   }
 }

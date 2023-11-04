@@ -1,4 +1,4 @@
-import 'package:ap_front/models/albumOnly.dart';
+import 'package:ap_front/models/albumbase.dart';
 import 'package:ap_front/models/member.dart';
 
 class BandWithAlbum {
@@ -6,7 +6,7 @@ class BandWithAlbum {
   String name;
   String nationality;
   List<Member> members;
-  List<AlbumOnly> albums;
+  List<Albumbase> albums;
 
   BandWithAlbum(
       {required this.bandId,
@@ -21,8 +21,8 @@ class BandWithAlbum {
         .map((e) => Member.fromJson(e))
         .toList();
     var albumsFromJson = json['albums'];
-    List<AlbumOnly> albumJson = List<dynamic>.from(albumsFromJson)
-        .map((e) => AlbumOnly.fromJson(e))
+    List<Albumbase> albumJson = List<dynamic>.from(albumsFromJson)
+        .map((e) => Albumbase.fromJson(e))
         .toList();
     return BandWithAlbum(
         bandId: json['bandId'],
