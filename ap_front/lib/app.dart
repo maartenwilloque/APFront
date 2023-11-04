@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ap_front/pages/home_page.dart';
 import 'package:ap_front/pages/camera_view.dart';
 import 'package:ap_front/pages/review.dart';
-import '/pages/history.dart';
 import 'package:localstorage/localstorage.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
