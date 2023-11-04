@@ -27,14 +27,12 @@ class _ReviewPageState extends State<ReviewPage> {
   String userId = "";
   String userName = "";
 
-  String getID() {
-    userId = LocalStorage('user_storage').getItem('guid');
-    userName = LocalStorage('user_storage').getItem('username');
-    return userId;
-  }
+  Future<void> getIDAndRating() async {
+    LocalStorage userStorage = LocalStorage('user_storage');
+    await userStorage.ready;
+    userId = userStorage.getItem('guid');
+    userName = userStorage.getItem('username');
 
-  //final userId = LocalStorage('user_storage').getItem('guid');
-  _getRating(String userId) async {
     loading = true;
     await RatingApi.getRatingsWithAlbum(userId).then((result) {
       setState(() {
@@ -78,9 +76,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    getID();
-    _getRating(userId);
+    getIDAndRating();
     super.initState();
   }
 
