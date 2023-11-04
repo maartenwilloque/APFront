@@ -158,7 +158,15 @@ class _ReviewPageState extends State<ReviewPage> {
                                   _ratingList[index].album.title,
                                   style: theme.headlineSmall,
                                 ),
-                                //Text(_ratingList[index].album), //TODO
+                                Text(
+                                  _albumList
+                                      .firstWhere((x) =>
+                                          x.albumId ==
+                                          _ratingList[index].album.albumId)
+                                      .band
+                                      .name,
+                                  style: theme.bodySmall,
+                                ),
                                 RatingStars(
                                   rating: _ratingList[index].score.toDouble(),
                                   starSize: 25.0,
