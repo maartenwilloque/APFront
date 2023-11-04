@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:ap_front/models/averageRating.dart';
 import 'package:ap_front/models/rating.dart';
 import 'package:ap_front/models/ratingWithAlbum.dart';
@@ -8,16 +6,17 @@ import 'package:http/http.dart' as http;
 
 class RatingApi {
   static String server = 'api-gateway-maartenwilloque.cloud.okteto.net';
+  static String server2 = 'user-service-maartenwilloque.cloud.okteto.net';
 
 //Post Rating
   static Future<Rating> createRating(Rating rating) async {
-    var url = Uri.https(server, '/rating');
-
+    var url = Uri.https(server2, '/api/rating');
+    final Map<String, dynamic> rating1 = rating.toJson(rating);
     final http.Response response = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(rating));
+        body: jsonEncode(rating1));
     if (response.statusCode == 200) {
       return Rating.fromJson(jsonDecode(response.body));
     } else {
@@ -37,8 +36,8 @@ class RatingApi {
     }
   }
 
-  static Future<String> deleteRating(Long id) async {
-    var url = Uri.https(server, '/rating/$id');
+  static Future<String> deleteRating(int id) async {
+    var url = Uri.https(server2, '/api/rating/$id');
     final http.Response response = await http.delete(url);
     if (response.statusCode == 200) {
       return "deleted";
@@ -53,11 +52,9 @@ class RatingApi {
 
     final http.Response response = await http.get(url);
     if (response.statusCode == 200) {
-      List<dynamic> ratingsJson = json.decode(response.body);
-      List<RatingWithAlbum> ratings = ratingsJson
-          .map((dynamic item) => RatingWithAlbum.fromJson(item))
-          .toList();
-      return ratings;
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((r) => RatingWithAlbum.fromJson(r)).toList();
+      //return ratings;
     } else {
       throw Exception('Failed to load ratings');
     }

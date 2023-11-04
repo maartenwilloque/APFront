@@ -21,7 +21,7 @@ class _RatingPopupState extends State<RatingPopup> {
   String guid = LocalStorage('user_storage').getItem('guid') ?? '';
 
   void saveRating(String newalbumId, String newname, int newscore) {
-    Rating rating = Rating(albumId: newalbumId, score: newscore, name: newname);
+    Rating rating = Rating(score: newscore, albumId: newalbumId, name: newname);
     RatingApi.createRating(rating);
   }
 

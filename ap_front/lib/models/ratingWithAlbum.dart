@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
-import 'package:ap_front/models/albumOnly.dart';
+import 'package:ap_front/models/albumbase.dart';
 
 class RatingWithAlbum {
-  Long id;
+  int id;
   String name;
   int score;
-  AlbumOnly album;
+  Albumbase album;
 
   RatingWithAlbum({
     required this.id,
@@ -17,7 +15,7 @@ class RatingWithAlbum {
 
   factory RatingWithAlbum.fromJson(Map<String, dynamic> json) {
     var albumFromJson = json['album'];
-    AlbumOnly albumOnlyJson = AlbumOnly.fromJson(albumFromJson);
+    Albumbase albumOnlyJson = Albumbase.fromJson(albumFromJson);
     return RatingWithAlbum(
         id: json['id'],
         name: json['name'],
