@@ -93,10 +93,10 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
             fixedSize: const Size(290, 50),
             backgroundColor: scheme.primary,
           ),
-          onPressed: () {
+          onPressed: () async {
             if (!deletingRating) {
-              deleteRating();
-              Navigator.of(context).pop();
+              await deleteRating()
+                  .then((value) => Navigator.of(context).pushNamed('/review'));
             }
           },
           child: Text(
