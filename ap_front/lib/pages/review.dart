@@ -27,6 +27,7 @@ class _ReviewPageState extends State<ReviewPage> {
   bool loading = true;
   String userId = "";
   String userName = "";
+  bool ratingWasDeleted = false;
 
   Future<void> getIDAndRating() async {
     LocalStorage userStorage = LocalStorage('user_storage');
@@ -83,6 +84,10 @@ class _ReviewPageState extends State<ReviewPage> {
   void initState() {
     getIDAndRating();
     super.initState();
+  }
+
+  _handleOutput() {
+    ratingWasDeleted = true;
   }
 
   @override
@@ -196,12 +201,20 @@ class _ReviewPageState extends State<ReviewPage> {
                                             ratingList: _ratingList,
                                             albumName:
                                                 _ratingList[index].album.title,
+                                            onDeleted: (bool deleted) {
+                                              _handleOutput();
+                                            },
                                           );
                                         },
                                       ).then((result) async {
-                                        loading = true;
-                                        Navigator.of(context).pop();
-                                        await getIDAndRating();
+                                        if (ratingWasDeleted) {
+                                          setState(() {
+                                            _ratingList.removeWhere((x) =>
+                                                x.id == _ratingList[index].id);
+                                          });
+
+                                          ratingWasDeleted = false;
+                                        }
                                       });
                                     },
                                   ),

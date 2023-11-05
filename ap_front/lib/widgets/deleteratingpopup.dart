@@ -5,16 +5,20 @@ import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/titledisplay.dart';
 import 'package:flutter/material.dart';
 
+typedef MyCallback = void Function(bool deleted);
+
 class DeleteRatingPopup extends StatefulWidget {
   final int ratingId;
   final List<RatingWithAlbum> ratingList;
   final String albumName;
+  final MyCallback onDeleted;
 
   const DeleteRatingPopup(
       {Key? key,
       required this.ratingId,
       required this.ratingList,
       required this.albumName,
+      required this.onDeleted,
       rewq})
       : super(key: key);
 
@@ -27,6 +31,7 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
   bool deleteConfirmed = false;
   bool deletingRating = false;
   bool ratingDeleted = false;
+  bool showCloseButton = false;
   String message = "";
 
   @override
@@ -52,12 +57,15 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
           deletingRating = false;
           ratingDeleted = true;
           message = 'Rating Deleted!';
+          widget.onDeleted(true);
+          showCloseButton = true;
         });
       } else {
         setState(() {
           deletingRating = false;
           ratingDeleted = false;
           message = 'Something went wrong.';
+          showCloseButton = true;
         });
       }
     } catch (e) {
@@ -65,6 +73,7 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
         deletingRating = false;
         ratingDeleted = false;
         message = 'Something went wrong.';
+        showCloseButton = true;
       });
     }
   }
@@ -93,14 +102,17 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
             fixedSize: const Size(290, 50),
             backgroundColor: scheme.primary,
           ),
-          onPressed: () async {
+          onPressed: () {
             if (!deletingRating) {
-              await deleteRating()
-                  .then((value) => Navigator.of(context).pushNamed('/review'));
+              if (!showCloseButton) {
+                deleteRating();
+              } else {
+                Navigator.of(context).pop();
+              }
             }
           },
           child: Text(
-            "Confirm",
+            showCloseButton ? "Close" : "Confirm",
             style: theme.displaySmall,
           ),
         ),
