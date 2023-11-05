@@ -163,6 +163,8 @@ class _ReviewPageState extends State<ReviewPage> {
                                     Text(
                                       _ratingList[index].album.title,
                                       style: theme.headlineSmall,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       _albumList
