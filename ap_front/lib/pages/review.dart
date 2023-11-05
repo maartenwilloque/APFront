@@ -200,6 +200,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                         },
                                       ).then((result) async {
                                         loading = true;
+                                        Navigator.of(context).pop();
                                         await getIDAndRating();
                                       });
                                     },
