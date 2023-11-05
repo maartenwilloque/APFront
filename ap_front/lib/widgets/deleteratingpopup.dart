@@ -96,6 +96,7 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
           onPressed: () {
             if (!deletingRating) {
               deleteRating();
+              Navigator.of(context).pop();
             }
           },
           child: Text(
