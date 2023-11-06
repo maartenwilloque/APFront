@@ -45,7 +45,7 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
         message = "deleting rating...";
       });
 
-      final result = await RatingApi.deleteRating(widget.ratingId as ffi.Long);
+      final result = await RatingApi.deleteRating(widget.ratingId);
 
       if (result == "deleted") {
         widget.ratingList.removeWhere((rating) => rating.id == widget.ratingId);

@@ -1,7 +1,6 @@
 import 'package:ap_front/apis/album_api.dart';
 import 'package:ap_front/apis/thumbnail_api.dart';
 import 'package:ap_front/models/album.dart';
-import 'package:ap_front/textstyles/loadingstyles.dart';
 import 'package:ap_front/widgets/albumcover.dart';
 import 'package:ap_front/widgets/banddisplay.dart';
 import 'package:ap_front/widgets/ratingpopup.dart';
