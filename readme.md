@@ -1,64 +1,77 @@
-# MyApp
+<div align='center'>
 
-This is our app
+<h1>Flutter AR enabled app</h1>
+<p>A flutter app designed to scan and recognize album covers, these albums can be rated by the user.</p>
 
-## Getting Started
 
-To get started with MyApp, follow these steps:
 
-1. Clone this repository to your local machine.
-2. Open the project in your preferred code editor.
-3. Run the following command to install the required dependencies:
+</div>
 
-    ```
-    flutter pub get
-    ```
+# :notebook_with_decorative_cover: Table of Contents
 
-4. Once the dependencies are installed, run the app using the following command:
+- [About the Project](#star2-about-the-project)
+- [License](#warning-license)
 
-    ```
-    flutter run
-    ```
 
-## Features
+## :star2: About the Project
 
-MyApp includes the following features:
+### :dart: Features
 
-- A home screen with a list of items.
-- A detail screen that displays more information about each item.
-- A search bar that allows users to search for specific items.
-- A settings screen that allows users to customize the app's appearance and behavior.
+- Scan and recognize Albums
+- Rate your favourite albums
+- discover more
 
-## Widgets
 
-MyApp uses the following Flutter widgets:
+### :art: Color Reference
+| Color | Hex |
+| --------------- | ---------------------------------------------------------------- |
+| Primary Color | ![#0b418c](https://via.placeholder.com/10/0b418c?text=+) #0b418c |
+| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
+| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
+| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
 
-- `ListView`
-- `Card`
-- `InkWell`
-- `TextField`
-- `AppBar`
-- `Drawer`
-- `SwitchListTile`
-- `RadioListTile`
-- `CheckboxListTile`
+## :toolbox: Getting Started
 
-## Requirements
+### :gear: Installation
 
-To run MyApp, you will need:
 
-- Flutter SDK (version 2.0.0 or higher)
-- Android Studio or VS Code (or any other code editor of your choice)
+install dart for windows
+```bash
+choco install dart-sdk
+```
 
-## License
+install dart for macos
+```bash
+brew tap dart-lang/dart brew install dart
+```
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-# MyApp
+get dependencies
+```bash
+dart pub get
+```
 
-MyApp is a simple Flutter application that demonstrates how to use various widgets and features of the Flutter framework.
 
-# Getting Started
 
-To get started with our app, clone this repository and run the following command:
+### :running: Run Locally
 
- `flutter run`
+Clone the project
+
+```bash
+https://github.com/maartenwilloque/APFront
+```
+
+Go to project directory
+```bash
+cd APfront
+```
+
+Run the app
+```bash
+flutter run
+```
+
+
+
+## :warning: License
+
+Distributed under the no License. See LICENSE.txt for more information.
