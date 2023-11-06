@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi' as ffi;
 import 'package:ap_front/apis/rating_api.dart';
 import 'package:ap_front/models/ratingWithAlbum.dart';
 import 'package:ap_front/textstyles/loadingstyles.dart';
@@ -44,7 +45,7 @@ class _DeleteRatingPopupState extends State<DeleteRatingPopup> {
         message = "deleting rating...";
       });
 
-      final result = await RatingApi.deleteRating(widget.ratingId);
+      final result = await RatingApi.deleteRating(widget.ratingId as ffi.Long);
 
       if (result == "deleted") {
         widget.ratingList.removeWhere((rating) => rating.id == widget.ratingId);
