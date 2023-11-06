@@ -66,4 +66,4 @@ flutter run
 
 ## :warning: License
 
-Distributed under the no License. See LICENSE.txt for more information.
+Distributed under the MIT license, refer to LICENSE
