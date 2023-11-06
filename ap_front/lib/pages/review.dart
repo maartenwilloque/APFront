@@ -22,8 +22,8 @@ class ReviewPage extends StatefulWidget {
 
 class _ReviewPageState extends State<ReviewPage> {
   List<RatingWithAlbum> _ratingList = [];
-  List<Album> _albumList = [];
-  List<AlbumAndUrl> _albumAndUrlList = [];
+  final List<Album> _albumList = [];
+  final List<AlbumAndUrl> _albumAndUrlList = [];
   bool loading = true;
   String userId = "";
   String userName = "";

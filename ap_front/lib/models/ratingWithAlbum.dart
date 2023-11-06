@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:ap_front/models/albumbase.dart';
 
 class RatingWithAlbum {
